@@ -10,10 +10,10 @@ Have a look on the question [here](https://leetcode.com/explore/featured/card/fe
         -  3(11) & 1 = 1
         - 2(10) & 1 = 0
 
-- Left Shift
-    - num << n // Last n bits of num will be lost.
-    - 3(11 << 1) = 1
-    - 3847(111100000111 << 1) = 11110000011
+- Right Shift
+    - num >> n // Last n bits of num will be lost.
+    - 3(11 >> 1) = 1
+    - 3847(111100000111 >> 1) = 11110000011
 
 - Since the given number is of 32 bit precision, we need to perform the above operation 32 times.
 
