@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "Solution.cpp"
 
 using namespace std;
 
@@ -8,7 +9,8 @@ void displayVector(vector<int> arr);
 int main()
 {
     vector<int> nums;
-    int val;
+    int val, longestHS;
+    Solution solution;
 
     while (true)
     {
@@ -21,7 +23,7 @@ int main()
         nums.push_back(val);
     }
 
-    displayVector(nums);
+    longestHS = solution.findLHS(nums);
 
     exit(0);
 }
