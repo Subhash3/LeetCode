@@ -20,8 +20,8 @@ arr = [1, 3, 2, 2, 5, 2, 3, 7]
 - This can be done in O(N) time where N is the no. of elements in the given array.
 
 - For any x, y in the hashmap, the length of the array with only x, y as unique elements is frequency of x + frequency of y.
-// Unique elements: [1, 3, 2, 5, 7]
-```json
+```c
+    // Unique elements: [1, 3, 2, 5, 7]
     Subseq      Length
     [1, 3]      1 + 2
     [1, 2]      1 + 3
