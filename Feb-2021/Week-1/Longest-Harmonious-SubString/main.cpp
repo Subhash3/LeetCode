@@ -24,6 +24,7 @@ int main()
     }
 
     longestHS = solution.findLHS(nums);
+    cout << "longestHs: " << longestHS << endl;
 
     exit(0);
 }
