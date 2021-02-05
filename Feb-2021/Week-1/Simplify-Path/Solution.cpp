@@ -8,10 +8,11 @@ using namespace std;
 class Solution
 {
 public:
-    void getDirectoriesList(string path, vector<string> *listOfDirs)
+    string simplifyPath(string path)
     {
         int i, pathLen;
-        string dirname = "";
+        string dirname = "", canonicalForm = "";
+        stack<string> dirStack;
 
         pathLen = path.size();
 
@@ -23,7 +24,22 @@ public:
             {
                 if (dirname != "")
                 {
-                    listOfDirs->push_back(dirname);
+                    if (dirname == ".")
+                    {
+                        // printf("This is current directory. Ignore\n");
+                    }
+                    else if (dirname == "..")
+                    {
+                        // printf("Go to the previous directory\n");
+                        if (!dirStack.empty())
+                        {
+                            dirStack.pop();
+                        }
+                    }
+                    else
+                    {
+                        dirStack.push(dirname);
+                    }
                     dirname = "";
                 }
             }
@@ -34,24 +50,6 @@ public:
         }
         if (dirname != "")
         {
-            listOfDirs->push_back(dirname);
-            dirname = "";
-        }
-
-        return;
-    }
-
-    string createCanonicalPath(vector<string> *listOfDirs)
-    {
-        stack<string> dirStack;
-        int i, noOfDirs;
-        string dirname, canonicalForm = "";
-
-        noOfDirs = listOfDirs->size();
-        for (i = 0; i < noOfDirs; i++)
-        {
-            dirname = (*listOfDirs)[i];
-            // cout << "Dirname: " << dirname << endl;
             if (dirname == ".")
             {
                 // printf("This is current directory. Ignore\n");
@@ -68,6 +66,7 @@ public:
             {
                 dirStack.push(dirname);
             }
+            dirname = "";
         }
 
         while (!dirStack.empty())
@@ -83,17 +82,6 @@ public:
         {
             canonicalForm = "/" + canonicalForm;
         }
-
-        return canonicalForm;
-    }
-
-    string simplifyPath(string path)
-    {
-        vector<string> listOfDirs;
-        string canonicalForm;
-
-        getDirectoriesList(path, &listOfDirs);
-        canonicalForm = createCanonicalPath(&listOfDirs);
 
         return canonicalForm;
     }
