@@ -1,0 +1,58 @@
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+class Solution
+{
+public:
+    void swap(int *a, int *b)
+    {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+
+        return;
+    }
+
+    void printVector(vector<int> arr)
+    {
+        int i, n;
+
+        n = arr.size();
+        for (i = 0; i < n; i++)
+        {
+            printf("%d, ", arr[i]);
+        }
+        printf("\b\b\n");
+
+        return;
+    }
+
+    void bubbleSort(vector<int> &arr)
+    {
+        int len, bubbled = 0, i;
+
+        len = arr.size();
+        while (bubbled < len)
+        {
+            printVector(arr);
+            for (i = 0; i < len - 1; i++)
+            {
+                printf("\t");
+                fflush(NULL);
+                printVector(arr);
+                if (arr[i] > arr[i + 1])
+                {
+                    swap(&arr[i], &arr[i + 1]);
+                }
+            }
+            bubbled += 1;
+        }
+    }
+
+    int findUnsortedSubarray(vector<int> &nums)
+    {
+        bubbleSort(nums);
+    }
+};
