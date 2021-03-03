@@ -7,11 +7,11 @@ class Solution
 public:
     int missingNumber(vector<int> &nums)
     {
-        int sum = 0, i, n = nums.size(), required = 0;
+        int sum = 0, n = nums.size(), required = 0;
 
-        for (i = 0; i < n; ++i)
+        for (auto num : nums)
         {
-            sum += nums[i];
+            sum += num;
         }
 
         required = n * (n + 1) / 2;
