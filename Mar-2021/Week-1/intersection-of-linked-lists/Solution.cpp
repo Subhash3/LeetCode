@@ -11,38 +11,77 @@ struct ListNode
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+// O(n) time, O(1) Space
 class Solution
 {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+    int getListSize(ListNode *head)
     {
-        set<ListNode *> visitedCells;
-        ListNode *ptrA = headA, *ptrB = headB;
+        ListNode *fast = NULL;
+        int count = 0;
+        bool even = false;
 
+        fast = head;
         while (true)
         {
-            if (ptrA == NULL && ptrB == NULL)
+            if (fast == NULL)
+            {
+                // Even no. of nodes
+                even = true;
+                break;
+            }
+            if (fast->next == NULL)
+            {
+                // Odd no. of nodes
+                even = false;
+                break;
+            }
+            fast = fast->next->next;
+            count += 1;
+        }
+
+        return even ? count * 2 : 2 * count + 1;
+    }
+
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+    {
+        int sizeA, sizeB, difference;
+        ListNode *ptr1 = NULL, *ptr2 = NULL;
+
+        sizeA = getListSize(headA);
+        sizeB = getListSize(headB);
+        difference = abs(sizeA - sizeB);
+        if (sizeA >= sizeB)
+        {
+            ptr1 = headA;
+            ptr2 = headB;
+        }
+        else if (sizeA < sizeB)
+        {
+            ptr2 = headA;
+            ptr1 = headB;
+        }
+
+        while (difference > 0)
+        {
+            ptr1 = ptr1->next;
+            difference -= 1;
+        }
+
+        while ((ptr1 != NULL) && (ptr2 != NULL) && (ptr1 != ptr2))
+        {
+            // printf("%d, %d\t %p %p\n", ptr1->val, ptr2->val, ptr1, ptr2);
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+        }
+
+        if (ptr1 == ptr2)
+        {
+            if (ptr1 == NULL)
             {
                 return NULL;
             }
-            if (ptrA != NULL)
-            {
-                if (visitedCells.find(ptrA) != visitedCells.end())
-                {
-                    return ptrA;
-                }
-                visitedCells.insert(ptrA);
-                ptrA = ptrA->next;
-            }
-            if (ptrB != NULL)
-            {
-                if (visitedCells.find(ptrB) != visitedCells.end())
-                {
-                    return ptrB;
-                }
-                visitedCells.insert(ptrB);
-                ptrB = ptrB->next;
-            }
+            return ptr1;
         }
 
         return NULL;
