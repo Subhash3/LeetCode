@@ -44,13 +44,13 @@ public:
     }
 
     // Custom comparator
-    static bool compare(vector<int> a, vector<int> b)
+    static bool compare(int a, int b)
     {
         int powerA, powerB;
         Solution solution;
 
-        powerA = a[1];
-        powerB = b[1];
+        powerA = solution.computePower(a);
+        powerB = solution.computePower(b);
         if (powerA < powerB)
         {
             return true;
@@ -67,16 +67,17 @@ public:
 
     int getKth(int lo, int hi, int k)
     {
-        int num, power;
-        vector<vector<int>> arr;
+        int num;
+        // int power;
+        vector<int> arr;
 
         this->lo = lo;
         this->hi = hi;
 
         for (num = this->hi; num >= this->lo; --num)
         {
-            power = computePower(num);
-            arr.push_back({num, power});
+            arr.push_back(num);
+            // power = computePower(num);
             // printf("%d => %d\n", num, power);
         }
 
@@ -91,6 +92,6 @@ public:
         //     // printf("%d : %d\n", it.first, it.second);
         // }
 
-        return arr[k - 1][0];
+        return arr[k - 1];
     }
 };
