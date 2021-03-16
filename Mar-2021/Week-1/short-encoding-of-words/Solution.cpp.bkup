@@ -1,0 +1,73 @@
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+class Solution
+{
+public:
+    int checkPrefix(string str, string prefix, int strLen, int prefixLen)
+    {
+        int len, i, j;
+
+        len = 0;
+        for (i = 0, j = 0; (i < strLen) || (j < prefixLen); i++, j++)
+        {
+            if (prefix[j] == str[i])
+            {
+                len += 1;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return len;
+    }
+
+    int minimumLengthEncoding(vector<string> &words)
+    {
+        int noOfStrings, i, j, strLen, prefixLen, len, encodedLen, hashesCount, maxPrefixLen, maxPrefixesSum;
+        string str, prefix;
+
+        noOfStrings = words.size();
+        encodedLen = 0;
+        hashesCount = noOfStrings;
+        maxPrefixesSum = 0;
+
+        for (i = 0; i < noOfStrings - 1; i++)
+        {
+            prefix = words[i];
+            prefixLen = prefix.length();
+            encodedLen += prefixLen;
+            str = words[i + 1];
+            strLen = str.length();
+            maxPrefixLen = -1;
+            for (j = prefixLen - 1; j >= 0; j--)
+            {
+                len = this->checkPrefix(str, prefix.substr(j, prefixLen), strLen, prefixLen - j);
+                if (len > 0)
+                {
+                    cout << prefix.substr(j, prefixLen) << " is a prefix of " << str << " with length " << len << endl;
+                    if (len > maxPrefixLen)
+                    {
+                        maxPrefixLen = len;
+                    }
+                }
+            }
+            if (maxPrefixLen > 0)
+            {
+                maxPrefixesSum += maxPrefixLen;
+                hashesCount -= 1;
+            }
+        }
+
+        encodedLen += words[noOfStrings - 1].length();
+
+        printf("%d, %d, %d\n", encodedLen, hashesCount, maxPrefixesSum);
+
+        return encodedLen + hashesCount - maxPrefixesSum;
+    }
+};
